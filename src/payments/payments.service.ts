@@ -42,7 +42,7 @@ export class PaymentsService {
     return session;
   }
 
-  async stripeWebhook(req: Request, res: Response) {
+  async stripeWebhook(req: Request, res: Response): Promise<void> {
     const sig = req.headers['stripe-signature'];
 
     let event: Stripe.Event;
@@ -71,7 +71,6 @@ export class PaymentsService {
       default:
       // console.log('🚀 ~ PaymentsService ~ stripeWebhook ~ event:', event);
     }
-
-    return res.status(200).json({ sig });
+    res.status(200).json({ message: 'Webhook received', signature: sig });
   }
 }
